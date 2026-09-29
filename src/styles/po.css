@@ -1,0 +1,651 @@
+/* =========================================================
+   PO Management module
+   ========================================================= */
+
+.po-page {
+  padding-bottom: var(--space-4);
+}
+
+.po-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-4);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ---------------- KPI cards ---------------- */
+.po-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.po-kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.po-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.po-kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.po-kpi-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--primary-soft);
+  color: var(--accent);
+}
+
+.po-kpi-value {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.po-kpi-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.po-kpi-note.tone-up {
+  color: var(--success);
+}
+
+.po-kpi-note.tone-down {
+  color: var(--danger);
+}
+
+.po-kpi-note.tone-warn {
+  color: var(--warning);
+}
+
+/* ---------------- Tabs ---------------- */
+.po-tabs {
+  display: flex;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.po-tab {
+  position: relative;
+  padding: 14px 2px;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.po-tab:hover {
+  color: var(--text-primary);
+}
+
+.po-tab.active {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.po-tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: transparent;
+  transition: background var(--transition);
+}
+
+.po-tab.active::after {
+  background: var(--accent);
+}
+
+/* ---------------- Summary card header ---------------- */
+.po-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.po-export-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--space-5) var(--space-4);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* ---------------- Monthly matrix ---------------- */
+.po-matrix-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+}
+
+.po-matrix {
+  width: 100%;
+  min-width: 1140px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.po-matrix thead th {
+  padding: 11px 8px;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.po-matrix thead th.col-company {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  text-align: left;
+  border-right: 1px solid var(--border-soft);
+}
+
+.po-matrix tbody th.col-company {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  padding: 10px 12px;
+  background: var(--surface);
+  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.po-matrix tbody td {
+  padding: 7px 6px;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-secondary);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.po-matrix tbody tr:hover td {
+  background: var(--surface-hover);
+}
+
+.po-matrix td.col-total,
+.po-matrix th.col-total {
+  border-left: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.po-cell {
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: background var(--transition), color var(--transition),
+    transform var(--transition);
+}
+
+.po-cell:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.po-cell-zero {
+  display: inline-block;
+  padding: 5px 9px;
+  color: var(--text-muted);
+  opacity: 0.55;
+}
+
+.po-matrix tfoot th,
+.po-matrix tfoot td {
+  padding: 11px 8px;
+  background: var(--surface-soft);
+  border-top: 2px solid var(--border);
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.po-matrix tfoot th.col-company {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+
+/* ---------------- Details ---------------- */
+.po-details-body {
+  padding-top: var(--space-3);
+}
+
+.po-toolbar .search-input {
+  max-width: 270px;
+}
+
+.po-table-scroll {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+}
+
+.po-table .po-th {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  transition: color var(--transition);
+}
+
+.po-th:hover {
+  color: var(--text-primary);
+}
+
+.po-th.active {
+  color: var(--accent);
+}
+
+.po-table td.num,
+.po-table th.num {
+  text-align: right;
+}
+
+.po-number-cell {
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.po-remarks {
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-secondary);
+}
+
+/* ---------------- Billing progress ---------------- */
+.po-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 158px;
+}
+
+.po-progress-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.po-progress-track {
+  flex: 1;
+  min-width: 50px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-hover);
+  overflow: hidden;
+}
+
+.po-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--warning);
+  transition: width var(--transition-slow);
+}
+
+.po-progress.tone-complete .po-progress-fill {
+  background: var(--success);
+}
+
+.po-progress.tone-pending .po-progress-fill {
+  background: #b9c2c9;
+}
+
+.po-progress-pct {
+  min-width: 34px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.po-progress.compact {
+  min-width: 0;
+  width: 100%;
+}
+
+/* ---------------- Pagination ---------------- */
+.po-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-soft);
+}
+
+.po-pagination .po-page-size {
+  margin-left: auto;
+}
+
+.po-page-size {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.po-page-size select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 13px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.po-page-size select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-focus);
+}
+
+/* ---------------- Loading skeletons ---------------- */
+.po-table-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 6px 0;
+}
+
+.po-table-skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.po-matrix-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.po-matrix-skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* ---------------- Mobile PO cards ---------------- */
+.po-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.po-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: var(--space-4);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.po-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.po-card-number {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.po-card-company {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.po-card-amount {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.po-card-meta {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.po-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 9px;
+  border-top: 1px dashed var(--border);
+}
+
+.po-card-date {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* ---------------- Detail modal ---------------- */
+.po-detail-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+}
+
+.po-detail-number {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.po-detail-company {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.detail-list .full {
+  grid-column: 1 / -1;
+}
+
+.po-bill-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* =========================================================
+   Print — only the monthly summary reaches the paper
+   ========================================================= */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .po-print-area,
+  .po-print-area * {
+    visibility: visible !important;
+  }
+
+  .po-print-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  .po-print-area .card-header {
+    padding: 0 0 12px !important;
+  }
+
+  .po-header-actions,
+  .po-export-hint,
+  .no-print,
+  .toast-stack {
+    display: none !important;
+  }
+
+  .po-matrix-scroll {
+    overflow: visible !important;
+    border: 1px solid var(--border) !important;
+  }
+
+  .po-matrix {
+    min-width: 0 !important;
+  }
+
+  .po-cell {
+    background: none !important;
+    color: var(--text-primary) !important;
+    transform: none !important;
+  }
+
+  .app-frame,
+  .main-content {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 1024px) {
+  .po-header-actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .po-tabs {
+    gap: var(--space-4);
+  }
+
+  .po-tab {
+    flex: 1;
+    text-align: center;
+  }
+
+  .po-toolbar .search-input {
+    max-width: none;
+    width: 100%;
+  }
+
+  .po-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .po-pagination {
+    justify-content: center;
+  }
+
+  .po-pagination .po-page-size {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .po-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .po-kpi-card {
+    padding: var(--space-4);
+  }
+}

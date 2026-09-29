@@ -11,8 +11,12 @@ import {
   Cloud,
   ArrowLeftRight,
   FileUp,
+  FilePlus2,
+  FileText,
+  ClipboardList,
   ChevronRight,
   ArrowUpRight,
+  ShieldCheck,
 } from "lucide-react";
 import { useApp } from "../../context/AppContext";
 
@@ -27,11 +31,16 @@ const menuGroups = [
   },
   {
     label: "Sales",
-    links: [{ to: "/bills", label: "Bill Management", icon: ReceiptText }],
+    links: [
+      { to: "/quotations/create", label: "Create Quotation", icon: FilePlus2, module: "quotations" },
+      { to: "/quotations", label: "Quotations", icon: FileText, end: true },
+      { to: "/po-management", label: "PO & Bill Management", icon: ClipboardList },
+      { to: "/bills", label: "Bill Management", icon: ReceiptText },
+    ],
   },
   {
     label: "Follow-ups",
-    links: [{ to: "/follow-ups", label: "Call Status", icon: PhoneCall }],
+    links: [{ to: "/follow-ups", label: "Call Status / Follow-ups", icon: PhoneCall }],
   },
 ];
 
@@ -45,8 +54,19 @@ const dataLinks = [
   { to: "/data-management/csv-import", label: "CSV Import", icon: FileUp },
 ];
 
+const adminLinks = [
+  { to: "/admin/users", label: "User Management", icon: ShieldCheck },
+];
+
 export default function Sidebar() {
-  const { mobileNavOpen, closeMobileNav } = useApp();
+  const { mobileNavOpen, closeMobileNav, can } = useApp();
+  /* Read-only accounts do not get the Create Quotation shortcut. */
+  const groups = menuGroups.map((group) => ({
+    ...group,
+    links: group.links.filter(
+      (link) => link.module !== "quotations" || can("quotations")
+    ),
+  }));
   const location = useLocation();
   const [dataOpen, setDataOpen] = useState(
     location.pathname.startsWith("/data-management")
@@ -74,15 +94,21 @@ export default function Sidebar() {
         </div>
 
         <nav className="sidebar-nav">
-          {menuGroups.map((group) => (
+          {groups.map((group) => (
             <div key={group.label}>
               <p className="nav-label">{group.label}</p>
-              {group.links.map(({ to, label, icon: Icon }) => (
+              {group.links.map(({ to, label, icon: Icon, end }) => {
+                /* Create Quotation also highlights while editing a quotation. */
+                const forceActive =
+                  to === "/quotations/create" &&
+                  location.pathname.startsWith("/quotations/edit");
+                return (
                 <NavLink
                   key={to}
                   to={to}
+                  end={end}
                   className={({ isActive }) =>
-                    `nav-item${isActive ? " active" : ""}`
+                    `nav-item${isActive || forceActive ? " active" : ""}`
                   }
                   onClick={closeMobileNav}
                   title={label}
@@ -92,8 +118,27 @@ export default function Sidebar() {
                   </span>
                   <span>{label}</span>
                 </NavLink>
-              ))}
+                );
+              })}
             </div>
+          ))}
+
+          <p className="nav-label">Administration</p>
+          {adminLinks.map(({ to, label, icon: Icon }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                `nav-item${isActive ? " active" : ""}`
+              }
+              onClick={closeMobileNav}
+              title={label}
+            >
+              <span className="nav-icon" aria-hidden="true">
+                <Icon size={16} strokeWidth={2.1} />
+              </span>
+              <span>{label}</span>
+            </NavLink>
           ))}
 
           <p className="nav-label">Data</p>

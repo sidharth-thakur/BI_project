@@ -9,7 +9,9 @@
 
 .app-frame {
   display: flex;
-  min-height: calc(100vh - 32px);
+  /* Fixed shell height: only .main-content scrolls, so the topbar and
+     sidebar stay pinned like a proper enterprise app layout. */
+  height: calc(100vh - 32px);
   background: var(--app-frame);
   border: 1px solid var(--border);
   border-radius: var(--radius-frame);
@@ -23,6 +25,7 @@
   flex-direction: column;
   width: var(--sidebar-width);
   flex-shrink: 0;
+  min-height: 0;
   background: var(--surface-soft);
   border-right: 1px solid var(--border-soft);
   transition: transform var(--transition-slow);
@@ -70,6 +73,7 @@
 
 .sidebar-nav {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 8px 16px 16px;
 }
@@ -222,6 +226,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
 }
 
 /* ---------------- Topbar ---------------- */
@@ -408,10 +413,15 @@ button.lang-pill:hover {
 }
 
 /* ---------------- Main content ---------------- */
+/* The single scrollport of the shell: the topbar stays visible above it. */
 .main-content {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 28px;
   animation: fade-in var(--transition-slow);
+  overscroll-behavior: contain;
 }
 
 /* ---------------- Page header ---------------- */

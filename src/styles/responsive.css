@@ -20,7 +20,7 @@
   }
 
   .app-frame {
-    min-height: calc(100vh - 20px);
+    height: calc(100vh - 20px);
     border-radius: 22px;
   }
 
@@ -109,7 +109,7 @@
   }
 
   .app-frame {
-    min-height: 100vh;
+    height: 100vh;
     border-radius: 0;
     border: none;
   }

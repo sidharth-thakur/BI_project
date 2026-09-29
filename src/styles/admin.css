@@ -1,0 +1,121 @@
+/* =========================================================
+   Administration — User Management
+   ========================================================= */
+
+.admin-counts {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* User cell: avatar + stacked name/email + badge */
+.user-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-cell .badge {
+  margin-left: 2px;
+}
+
+/* ---------------- Segmented rights control ---------------- */
+.rights-toggle {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+}
+
+.rights-option {
+  padding: 5px 11px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition);
+}
+
+.rights-option:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.rights-option.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(15, 110, 108, 0.3);
+}
+
+.rights-toggle.disabled {
+  opacity: 0.75;
+}
+
+.rights-option:disabled {
+  cursor: not-allowed;
+}
+
+/* ---------------- Form modal rights rows ---------------- */
+.rights-fieldset {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+}
+
+.rights-fieldset legend {
+  padding: 0 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.rights-fieldset .form-note {
+  margin: 0 0 var(--space-3);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.rights-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rights-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.rights-module {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Icon-button danger tone for the delete action */
+.icon-btn.danger:hover:not(:disabled) {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .admin-counts {
+    width: 100%;
+  }
+
+  .rights-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
